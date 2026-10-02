@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-logo: var(--font-fredoka), var(--font-geist-sans), sans-serif;
+
+  /* Couleur principale du site : un vert kaki (s'utilise comme les couleurs Tailwind : bg-kaki-600...) */
+  --color-kaki-50: #f6f7f1;
+  --color-kaki-100: #e9ecdd;
+  --color-kaki-200: #d5dbbf;
+  --color-kaki-300: #b8c297;
+  --color-kaki-400: #98a66f;
+  --color-kaki-500: #7b8a55;
+  --color-kaki-600: #5f6f4a;
+  --color-kaki-700: #4e5c3c;
+  --color-kaki-800: #404b33;
+  --color-kaki-900: #363f2c;
+  --color-kaki-950: #1c2216;
+
+  /* Courbe de sortie "rapide puis douce" pour les petites animations (plus vive que le ease-out par défaut) */
+  --ease-sortie: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+body {
+  background: var(--color-stone-50);
+  color: var(--color-stone-800);
+}
+
+/* Titres équilibrés (pas de mot tout seul sur la dernière ligne), paragraphes sans veuve */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+blockquote {
+  text-wrap: pretty;
+}
+
+/* Si l'utilisateur a demandé moins d'animations, le défilement se fait sans glissement */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  ul {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Les pages qui contiennent data-sans-navbar (la page 404) n'affichent pas la barre de navigation */
+body:has([data-sans-navbar]) > header {
+  display: none;
+}
+
+/* Classes réutilisées dans toute l'application (boutons, champs, cartes...) */
+@layer components {
+  .conteneur {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-6;
+  }
+
+  .titre-page {
+    @apply text-3xl font-bold tracking-tight text-stone-900;
+  }
+
+  .carte {
+    @apply rounded-2xl border border-stone-200 bg-white shadow-sm;
+  }
+
+  /* Le bouton s'enfonce légèrement au clic (feedback physique), sauf si on a réduit les animations */
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-[background-color,border-color,color,transform] duration-150 ease-(--ease-sortie) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-kaki-600 motion-safe:active:scale-[0.97] disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-principal {
+    @apply bg-kaki-600 text-white hover:bg-kaki-700;
+  }
+
+  .btn-secondaire {
+    @apply border border-stone-300 bg-white text-stone-700 hover:bg-stone-100;
+  }
+
+  .btn-danger {
+    @apply border border-red-200 bg-white text-red-700 hover:bg-red-50;
+  }
+
+  .champ {
+    /* 16px sur mobile (text-base) sinon l'iPhone zoome automatiquement dans le champ */
+    @apply mt-1 block w-full rounded-lg border border-stone-300 bg-white px-3 py-2.5 text-base text-stone-900 sm:text-sm placeholder:text-stone-400 focus:border-kaki-600 focus:ring-2 focus:ring-kaki-600/20 focus:outline-none;
+  }
+
+  .champ-erreur {
+    @apply border-red-400 focus:border-red-500 focus:ring-red-500/20;
+  }
+
+  .etiquette {
+    @apply block text-sm font-medium text-stone-700;
+  }
+
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+}
