@@ -87,7 +87,7 @@ function insererDonneesDeDemo(db: DatabaseSync): void {
 
     const ajouterActivite = db.prepare(
       `INSERT INTO activites (nom, type_id, places_disponibles, description, datetime_debut, duree)
-       VALUES (?, (SELECT id FROM type_activite WHERE nom = ?), ?, ?, ?, ?)`,
+      VALUES (?, (SELECT id FROM type_activite WHERE nom = ?), ?, ?, ?, ?)`,
     );
     const activites: [string, string, number, string, string, number][] = [
       [
