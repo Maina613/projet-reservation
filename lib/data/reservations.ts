@@ -147,7 +147,7 @@ function verifierEtReserver(userId: number, activiteId: number, jour: string): R
   // La séance est complète, on refuse la réservation
   const prises = compter(
     `SELECT COUNT(*) AS total FROM reservations
-     WHERE activite_id = ? AND date_reservation = ? AND etat = 1`,
+    WHERE activite_id = ? AND date_reservation = ? AND etat = 1`,
     activiteId,
     seance,
   );
